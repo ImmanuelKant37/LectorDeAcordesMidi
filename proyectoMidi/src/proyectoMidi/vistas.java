@@ -5,17 +5,17 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 public class vistas{
 	Form form = new Form();
+	JLabel lblAcordeDim = new JLabel();
 	public vistas(){
-	
+		
 	}
 	
-	JLabel lblAcordeDim = new JLabel();
+
 	////////////MODIFICADOR DE IMAGEN DEL INSTRUMENTO////////////////////
 	///////////////////////////////////////////////////////////////////
 	public void resizeImagen(String imagePathToRead, String imagePathToWrite, int resizeWidth, int resizeHeight)
@@ -38,10 +38,9 @@ public class vistas{
 		}
 	}
 	//////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////
+	
 
 	////////////NOTAS ORDENADAS POR OCTAVA!!!///////////////////////////
-	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 	int valorDo[] = new int[] { 0, 12, 24, 36, 48, 60, 72, 84, 96, 118 };
 	int valorReb[] = new int[] { 1, 13, 25, 37, 49, 61, 73, 85, 97, 119 };
@@ -62,7 +61,7 @@ public class vistas{
 	String Acorde = "";
 	String acordeFormado = "Acorde";
 	
-	String teclasPresionadas[] = new String[14];
+
 	String nombreTeclasPresionadas[] = new String[130];
 	
 	String nNotaSostenido[] = new String[] { "Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si" };
@@ -78,8 +77,6 @@ public class vistas{
 	
 	int valorTeclaPresionada[] = new int[130];
 	int numeroDeOctava[] = 		 new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-
 
 
 	public String Distancia(int nota1, int nota2) {
@@ -131,48 +128,7 @@ public class vistas{
 
 	}
 
-
-	public void posicionesNotasPiano() {
-
-
-		form.label[3].setBounds(240, 0, 50, 200);// DO#
-		form.label[3].setForeground(Color.WHITE);// DO# Color
-
-		form.label[5].setBounds(295, 0, 50, 200);// RE#
-		form.label[5].setForeground(Color.WHITE);// RE# Color
-
-		form.label[8].setBounds(400, 0, 50, 200);// FA#
-		form.label[8].setForeground(Color.WHITE);// FA# Color
-
-		form.label[10].setBounds(460, 0, 50, 200);// SOL#
-		form.label[10].setForeground(Color.WHITE);// SOL# Color
-
-		form.label[12].setBounds(510, 0, 50, 200);// LA#
-		form.label[12].setForeground(Color.WHITE);// LA# Color
-
-		form.label[2].setBounds(215, 200, 50, 200);// DO
-		form.label[4].setBounds(270, 200, 50, 200);// RE
-		form.label[6].setBounds(320, 200, 50, 200);// MI
-		form.label[7].setBounds(375, 200, 50, 200);// FA
-
-		form.label[9].setBounds(425, 200, 50, 200);// SOL
-
-		form.label[11].setBounds(475, 200, 50, 200);// LA
-
-		form.label[13].setBounds(525, 200, 50, 200);// SI
-
-	}
 	
-
-	public void resetStringNombres() {
-		for (int i = 0; i < 129; i++) {
-			nombreTeclasPresionadas[i] = "";
-		}
-		for (int i = 0; i < 129; i++) {
-			valorTeclaPresionada[i] = -130;
-		}
-	}
-
 	public void verificarNotas(int octava) {
 		
 			if (numeroDeNota == valorDo[octava]) {

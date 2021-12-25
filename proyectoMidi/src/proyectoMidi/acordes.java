@@ -1,6 +1,6 @@
 package proyectoMidi;
 
-public class acordes extends vistas{
+public class acordes extends VistaPiano{
 public acordes() {}
 public void notaOfNotaOn() {
 	String acorde = "";
