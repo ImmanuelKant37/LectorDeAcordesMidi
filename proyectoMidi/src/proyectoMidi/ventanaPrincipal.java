@@ -13,6 +13,7 @@ midi.abrirMidi(5);
 	
 		ventanaPrincipal v = new ventanaPrincipal();
 		
+		//////////////VARIACION 1
 
 	}
 
