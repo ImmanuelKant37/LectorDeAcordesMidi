@@ -65,12 +65,11 @@ public class MIDI  {
 			Transmitter controlador = dispMidi.getTransmitter();
 			Receiver receptor = new Receptor();
 
-			
 			controlador.setReceiver(receptor);
 	System.out.println("Abrir Midi OK");
 		
 		} catch (Exception e) {
-			System.out.println("Error en linea Abrir Midi");
+			System.out.println("Error en linea Abrir Midi"+ e.getMessage());
 		
 		}
 		

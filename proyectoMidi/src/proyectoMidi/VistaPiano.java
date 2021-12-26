@@ -67,8 +67,8 @@ public class VistaPiano extends vistas {
 		for (int i = 0; i < 129; i++) {
 			nombreTeclasPresionadas[i] = "";
 		}
-		for (int i = 0; i < 129; i++) {
-			valorTeclaPresionada[i] = -130;
+		for (int i = 0; i < 150; i++) {
+			valorTeclaPresionada[i] = 0;
 		}
 	}
 

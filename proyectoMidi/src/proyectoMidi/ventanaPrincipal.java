@@ -5,7 +5,7 @@ import java.io.IOException;
 public class ventanaPrincipal{
 	MIDI midi = new MIDI();
 	public ventanaPrincipal() {
-
+MIDI.mostrarDispositivo(5);
 midi.abrirMidi(5);
 	}
 	

@@ -1,6 +1,13 @@
 package proyectoMidi;
 
 public class acordes extends VistaPiano{
+private int st=0;
+private String bajo=nombreTeclasPresionadas[valorTeclaPresionada[st]];
+private String tonicaEn(int semitono,int nota) {
+	
+	String tonica=nombreTeclasPresionadas[valorTeclaPresionada[semitono+nota]] ;
+	 return tonica;
+}
 public acordes() {}
 public void notaOfNotaOn() {
 	String acorde = "";
@@ -12,7 +19,7 @@ public void notaOfNotaOn() {
 		nSoltada = numeroDeNota;
 		form.label[1].setText("");
 		form.label[0].setText("");
-		for (int ite = 0; ite < 10; ite++) {
+		for (int ite = 0; ite < 12; ite++) {
 			verificarNotas(ite);
 			devuelveNotasON(ite);
 		}
@@ -94,31 +101,111 @@ public void notaOfNotaOn() {
 	}
 
 }
-int st=0;
+
+
+public Boolean segundaMayor() {
+	
+			boolean es=false;
+			for(int i=0;i<9;i++ ) {
+			if(Distancia(st + 0, valorRe[i]) == "Segunda Mayor"){
+				es=true;
+			}
+		}
+		return es;
+		} 
+public Boolean terceraMenor() {
+	
+			boolean es=false;
+			for(int i=0;i<9;i++ ) {
+			if(Distancia(st + 0, valorMib[i]) == "Tercera Menor"){
+				es=true;
+			}
+		}
+		return es;
+		} 
+public Boolean terceraMayor() {
+	boolean es=false;
+	for(int i=0;i<9;i++ ) {
+	if(Distancia(st + 0, valorMi[i]) == "Tercera Mayor"){
+		es=true;
+	}
+}
+return es;
+} 
+public Boolean cuarta() {
+	boolean es=false;
+	for(int i=0;i<9;i++ ) {
+	if(Distancia(st + 0, valorFa[i]) == "Cuarta"){
+		es=true;
+	}
+}
+return es;
+}
+public Boolean quintaDisminuida() {
+	boolean es=false;
+	for(int i=0;i<9;i++ ) {
+	if(Distancia(st + 0, valorSolb[i]) == "Quinta Disminuida"){
+		es=true;
+	}
+}
+return es;
+} 
+public Boolean quinta() {
+	boolean es=false;
+	for(int i=0;i<9;i++ ) {
+	if(Distancia(st + 0, valorSol[i]) == "Quinta"){
+		es=true;
+	}
+}
+return es;
+} 
+public Boolean sextaMenor() {
+	boolean es=false;
+	for(int i=0;i<9;i++ ) {
+	if(Distancia(st + 0, valorLab[i]) == "Sexta Menor"){
+		es=true;
+	}
+}
+return es;
+}
+public Boolean sextaMayor() {
+	boolean es=false;
+	for(int i=0;i<9;i++ ) {
+	if(Distancia(st + 0, valorLa[i]) == "Sexta Mayor"){
+		es=true;
+	}
+}
+return es;
+}
+public Boolean septimaMenor() {
+	boolean es=false;
+	for(int i=0;i<9;i++ ) {
+	if(Distancia(st + 0, valorSib[i]) == "Septima Menor"){
+		es=true;
+	}
+}
+return es;
+}
+
 public String esMayor() {
 
-	Acorde = "";
-	
-	//DESDE DO A MI
-	for (st = 0; st < 120; st++) {
-		if (Distancia(st + 0, st + 4) == "Tercera Mayor" 
-		 && Distancia(st + 0, st + 7) == "Quinta") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st]] + " Mayor";
-		}
-		
+	String Acorde = "";
 
-		if (Distancia(st + 0, st + 5) == "Cuarta"
-		 && Distancia(st + 0, st + 9) == "Sexta Mayor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st]] + "/" 
-	      + nombreTeclasPresionadas[valorTeclaPresionada[st+5]] + " Mayor";
+	for (st = 0; st < 120; st++) {
+		if (terceraMayor() && quinta()) {
+			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st]];
+			System.out.println(Acorde);
 		}
-		if (Distancia(st + 0, st + 3) == "Tercera Menor" 
-		 && Distancia(st + 0, st + 8) == "Sexta Menor") {
-					Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st]] + "/"
-						   + nombreTeclasPresionadas[valorTeclaPresionada[st+8]]   + " Mayor";
-				}
+		if (terceraMenor() && sextaMenor() ) {
+							Acorde = bajo + "/"
+								   + tonicaEn(st,8)+ " Mayor";
+							System.out.println(Acorde);
+		}
+		if (cuarta() && sextaMayor()) {
+							Acorde = bajo + "/" 
+								   +tonicaEn(st,5) + " Mayor";
+		}
 	}
-	//DESDE FA A SOL
 
 	return Acorde;
 }
@@ -127,18 +214,17 @@ public String esMenor() {
 	String Acorde = "";
 
 	for (st = 0; st < 120; st++) {
-		if (Distancia(st + 0, st + 3) == "Tercera Menor"
-		 && Distancia(st + 0, st + 7) == "Quinta") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st]] + " Menor";
+		if (terceraMenor()
+		 && quinta()) {
+			Acorde = bajo + " Menor";
 		}
-		if (Distancia(st + 7, st + 0) == "Cuarta"
-		 && Distancia(st + 7, st + 3) == "Sexta Menor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st + 7]] + "/" + nombreTeclasPresionadas[valorTeclaPresionada[st]] + " Menor";
+		if (cuarta()
+		 && sextaMenor()) {
+			Acorde = bajo + "/" + tonicaEn(st,5) + " Menor";
 		}
 
-		if (Distancia(st + 3, st + 7) == "Tercera Mayor"
-		 && Distancia(st + 3, st + 0) == "Sexta Mayor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st + 3]] + "/" + nombreTeclasPresionadas[valorTeclaPresionada[st + 0]] + " Menor";
+		if (terceraMayor() && sextaMayor()) {
+			Acorde = bajo + "/" +tonicaEn(st,9) + " Menor";
 		}
 	}
 
@@ -150,24 +236,19 @@ public String esDisminuido() {
 	String Acorde = "";
 		////////////////////////////////SIN INVERSION
 	for (st = 0; st < 120; st++) {
-		if (Distancia(st + 0, st + 3) == "Tercera Menor"
-		 && Distancia(st + 0, st + 6) == "Quinta Disminuida") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st]]
+		if (terceraMenor()
+		 && quintaDisminuida()) {
+			Acorde = bajo
 			+ 	" Dim ";
 		}
 		//////////////////////////////PRIMER INVERSION
-		if (Distancia(st + 3, st + 6) == "Tercera Menor" 
-		 && Distancia(st + 3, st + 0) == "Sexta Mayor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st+3]]
-			+ "/" + nombreTeclasPresionadas[valorTeclaPresionada[st+0]] 
-			+ "Dim";
+		if (terceraMenor() && sextaMayor()) {
+			Acorde = bajo+ "/" +tonicaEn(st,9)  + "Dim";
 		}
 		///////////////////////////////SEGUNDA INVERSION
-		if (Distancia(st + 6, st + 0) == "Quinta Disminuida" 
-		 && Distancia(st + 6, st + 3) == "Sexta Mayor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st+6]] 
-			+ "/" + nombreTeclasPresionadas[valorTeclaPresionada[st]]
-			+ "Dim ";
+		if (quintaDisminuida() 
+		 &&sextaMayor()) {
+			Acorde =bajo + "/"+ tonicaEn(st,6)	+ "Dim ";
 		}
 
 	
@@ -180,63 +261,49 @@ System.out.println(Acorde);
 public String esMayorSeptima() {
 
 	String Acorde = "";
-	
 	//MAYOR SEPTIMA SIN INVERTIR
 	for (st = 0; st < 120; st++) {
-		if (Distancia(st + 0, st + 4) == "Tercera Mayor" 
-				&& Distancia(st + 0, st + 7) == "Quinta"
-					&& Distancia(st + 0, st + 10) == "Septima Menor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st + 0]] + "Mayor" + "7";
+		if (terceraMayor()
+				&& quinta()
+					&& septimaMenor()) {
+			Acorde = bajo + "Mayor" + "7";
 		}
 	}
+	///////////////////////MAYOR SEPTIMA PRIMER INVERSION
 
-	//MAYOR SEPTIMA PRIMER INVERSION
-	////////////////////////////////////
-	for (int i = 0; i < 120; i++) {
-		if (Distancia(i , i + 3) == "Tercera Menor" 
-				&& Distancia(i , i + 6) == "Quinta Disminuida"
-					&& Distancia(i , i + 8) == "Sexta Menor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[i]]+"/"+nombreTeclasPresionadas[valorTeclaPresionada[i+8]]+ "Mayor" + "7";
+	for ( st = 0; st < 120; st++) {
+		if (terceraMenor()
+				&& quintaDisminuida()
+					&& sextaMenor()) {
+			Acorde = bajo +"/"+tonicaEn(st,8)+ "Mayor" + "7";
 		}
 	}
-	
-	
-	/////////////////////MAYOR SEPTIMA SEGUNDA INVERSION/////////////////////////////
-	for (int i = 0; i < 120; i++) {
-		if (Distancia(i , i + 3) == "Tercera Menor" 
-				&& Distancia(i , i+5) == "Cuarta"
-					&& Distancia(i , i +9) == "Sexta Mayor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[i]]+"/"+nombreTeclasPresionadas[valorTeclaPresionada[i+5]]+ "Mayor" + "7";
+	/////////////////////MAYOR SEPTIMA SEGUNDA INVERSION//
+	for (st = 0; st < 120; st++) {
+		if (terceraMenor()
+				&& cuarta()
+					&& sextaMayor()) {
+			Acorde = bajo+"/"+tonicaEn(st,5)+ "Mayor" + "7";
 			}
 	}
-	
-	
-	/////////////////MAYOR SEPTIMA TERCER INVERSION///////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////
-	for (int i = 0; i < 120; i++) {
-		if (Distancia(i, i +2) == "Segunda Mayor" 
-				&& Distancia(i , i+6) == "Quinta Disminuida"
-					&& Distancia(i , i +9) == "Sexta Mayor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[i]]+"/"+nombreTeclasPresionadas[valorTeclaPresionada[i+2]]+ "Mayor" + "7";
+	/////////////////MAYOR SEPTIMA TERCER INVERSION/////
+	for (st = 0; st < 120; st++) {
+		if (segundaMayor() 
+				&& quintaDisminuida()
+					&& sextaMayor()) {
+			Acorde = bajo+"/"+tonicaEn(st,2)+ "Mayor" + "7";
 			}
 	}
-	
-
-
 	return Acorde;
-
 }
 public String esMenorSeptima() {
-
 	String Acorde = "";
 	for (st = 0; st < 120; st++) {
-		if (Distancia(st + 0, st + 3) == "Tercera Menor" 
-				&& Distancia(st + 0, st + 7) == "Quinta"
-				&& Distancia(st + 0, st + 10) == "Septima Menor") {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st + 0]] + "Menor" + "7";
+		if (terceraMenor()
+				&& quinta()
+				&& septimaMenor()) {
+			Acorde = bajo + "Menor" + "7";
 		}
-	
-	
 	}
 	return Acorde;
 }
