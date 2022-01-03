@@ -18,7 +18,7 @@ public class vistas{
 
 public String distanciasEncontradas[]= new String[13];
 	public vistas(){
-	
+		form.imagen("src/img/Piano.jpg", 0, 0, 1000, 1000);
 		Valores.add(valorDo);//0
 		Valores.add(valorReb);
 		Valores.add(valorRe);

@@ -2,12 +2,17 @@ package proyectoMidi;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
 public class VistaPiano extends vistas {
-	public VistaPiano  (){
-		form.imagen("src/img/piano.jpg", 0, 0, 1000, 1000);
+	public VistaPiano  () throws IOException{
 		
+		resizeImagen("src/img/Piano.jpg","src/img/piano.jpg",1000,1000);
 	}
 	{
 	
@@ -101,6 +106,25 @@ public class VistaPiano extends vistas {
 		}
 		for (int i = 0; i < 150; i++) {
 			valorTeclaPresionada[i] = 0;
+		}
+	}
+	public void resizeImagen(String imagePathToRead, String imagePathToWrite, int resizeWidth, int resizeHeight)
+			throws IOException {
+		{
+
+			File fileToRead = new File(imagePathToRead);
+			BufferedImage bufferedImageInput = ImageIO.read(fileToRead);
+
+			BufferedImage bufferedImageOutput = new BufferedImage(resizeWidth, resizeHeight,
+					bufferedImageInput.getType());
+
+			Graphics2D g2d = bufferedImageOutput.createGraphics();
+			g2d.drawImage(bufferedImageInput, 0, 0, resizeWidth, resizeHeight, null);
+			g2d.dispose();
+
+			String formatName = imagePathToWrite.substring(imagePathToWrite.lastIndexOf(".") + 1);
+
+			ImageIO.write(bufferedImageOutput, formatName, new File(imagePathToWrite));
 		}
 	}
 
