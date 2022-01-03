@@ -1,5 +1,6 @@
 package proyectoMidi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,7 +12,7 @@ public class acordes extends VistaPiano{
 
 	public String bajo;
 
-	public acordes() {
+	public acordes() throws IOException {
 }
 	public String Nota="";
 	public String Nota(int nota) {
@@ -28,39 +29,27 @@ public class acordes extends VistaPiano{
 public void notaOfNotaOn() {
 	String acorde = "";
 
-
 	if (condicionalPulsada == 144) {
-	
-		nPulsadas[cantidadNotasPulsadas]=numeroDeNota;
-		notasEncontradas.add(numeroDeNota);////NOTAS ENCONTRADAS VALORES
+
+		nPulsadas[cantidadNotasPulsadas] = numeroDeNota;
+		notasEncontradas.add(numeroDeNota);//// NOTAS ENCONTRADAS VALORES
 		Collections.sort(notasEncontradas);
-	
+
 		cantidadNotasPulsadas++;
 		for (int ite = 0; ite < 12; ite++) {
 			verificarNotas(ite);
 			devuelveNotasON();
 		}
-		System.out.println("Valores de la lista: ");
-		for(int i=0; i<cantidadNotasPulsadas; i++) {
-			System.out.print(notasEncontradas.get(i)+" ");
 
-		System.out.print("nombre: "+ nombreTeclasPresionadas[notasEncontradas.get(i)]+" ");
-		System.out.println("i: "+i);
+		if (cantidadNotasPulsadas == 2) {
+			int numero = Math.abs(notasEncontradas.get(0) - notasEncontradas.get(1));
+			distanciasEncontradas[0] = Distancias[numero];
+			bajo = nombreTeclasPresionadas[notasEncontradas.get(0)];
 		}
-		if(cantidadNotasPulsadas ==2) {
-			int numero=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(1));
-			distanciasEncontradas[0]=Distancias[numero];
-			System.out.println("Dos Notas: "+notasEncontradas.get(0)+" ");
-			System.out.println(notasEncontradas.get(1));
-			System.out.println(Distancias[numero]);
-			System.out.println("Resta de primer distancia: "+numero);
-			bajo=nombreTeclasPresionadas[notasEncontradas.get(0)];
-		}
-		System.out.println();
+
 		form.label[1].setText("");
 		form.label[0].setText("");
-		
-		
+
 		if (cantidadNotasPulsadas >= 3) {
 			Collections.sort(notasEncontradas);
 			int numero2=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(1));
@@ -69,52 +58,45 @@ public void notaOfNotaOn() {
 			distanciasEncontradas[0]=Distancias[numero];
 			distanciasEncontradas[1]=Distancias[numero2];
 			bajo=nombreTeclasPresionadas[notasEncontradas.get(0)];
-			System.out.println("Dos Notas: "+notasEncontradas.get(1)+" ");
-			System.out.println(notasEncontradas.get(2)+" ");
-			System.out.println(distanciasEncontradas[0]+" "+distanciasEncontradas[1]+" ");
+		
+			form.label[1].setText("");
 
+			lblAcordeDim.setText("");
 			form.label[0].setText("");
 			form.label[0].setText(esMayor());
-		
-		form.label[1].setText("");
-	
-		lblAcordeDim.setText("");
-		
-		lblAcordeDim.setText(esDisminuido());
-		form.label[1].setText(esMenor()); 
+			lblAcordeDim.setText(esDisminuido());
+			form.label[1].setText(esMenor());
 		}
-		
-		if (cantidadNotasPulsadas == 4) {
+
+		if (cantidadNotasPulsadas >= 4) {
 			Collections.sort(notasEncontradas);
-			int numero1=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(1));
-			int numero2=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(2));
-		
-			int numero3=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(3));
+			int numero1 = Math.abs(notasEncontradas.get(0) - notasEncontradas.get(1));
+			int numero2 = Math.abs(notasEncontradas.get(0) - notasEncontradas.get(2));
 
-			distanciasEncontradas[0]=Distancias[numero1];
-			distanciasEncontradas[1]=Distancias[numero2];
-		distanciasEncontradas[2]=Distancias[numero3];
-		bajo=nombreTeclasPresionadas[notasEncontradas.get(0)];
-		System.out.println("Dos Notas: "+notasEncontradas.get(1)+" ");
-		System.out.println(notasEncontradas.get(2)+" ");
-		System.out.println(distanciasEncontradas[0]+" "+distanciasEncontradas[1]+" "+distanciasEncontradas[2]+" ");
+			int numero3 = Math.abs(notasEncontradas.get(0) - notasEncontradas.get(3));
 
+			distanciasEncontradas[0] = Distancias[numero1];
+			distanciasEncontradas[1] = Distancias[numero2];
+			distanciasEncontradas[2] = Distancias[numero3];
+			bajo = nombreTeclasPresionadas[notasEncontradas.get(0)];
+			Collections.sort(notasEncontradas);
 			form.label[0].setText("");
 			form.label[1].setText("");
-			
-			form.label[0].setText(esMayorSeptima());
-			form.label[1].setText(esMenorSeptima());
-		
-			if(form.label[0].getText()==""){
-			   form.label[0].setText(esMayor());
-			
-		}
+			if (form.label[1].getText() == "") {
+				form.label[1].setText(esMenor());
+				form.label[0].setText(esMayorSeptima());
 
-			if(form.label[1].getText()=="") {
-				lblAcordeDim.setText(esDisminuido());
-			
-		}
+			}
+			form.label[1].setText(esMenorSeptima());
+			form.label[0].setText(MayorSexta());
 	
+
+			if (form.label[1].getText() == "") {
+				form.label[1].setText(esMenor());
+				form.label[0].setText(esMayorSeptima());
+
+			}
+
 		}
 		if (cantidadNotasPulsadas < 3) {
 			form.label[0].setText(esMayor());
@@ -155,7 +137,7 @@ public void notaOfNotaOn() {
 		if (cantidadNotasPulsadas >= 4) {
 	
 			form.label[1].setText(esMayorSeptima());
-		
+			lblAcordeDim.setText(esDisminuido());
 			form.label[0].setText(esMenorSeptima());
 		}
 			
@@ -316,8 +298,6 @@ public Boolean SeptimaMayor() {
 return SeptimaMayor;
 }
 	
-	
-
 public String esMayor() {
 resetDistancias();
 	String Acorde = "";
@@ -335,7 +315,24 @@ resetDistancias();
 	}
 	return Acorde;
 }
-			
+public String MayorSexta() {
+resetDistancias();
+	String Acorde = "";
+	if(TerceraMayor()&&Quinta()&&SextaMayor()) {	
+		Acorde=bajo+" Mayor 6";
+		System.out.println("Acorde de: "+bajo+" Mayor 6");
+	}
+	if(TerceraMenor()&&Cuarta()&&SextaMenor()) {	
+		Acorde=bajo+"/"+Nota(2)+" Mayor 6";
+		System.out.println("Acorde de: "+bajo+"/"+Nota(2)+" Mayor 6 ");
+	}
+	if(SegundaMayor()&&Cuarta()&&SextaMayor()) {	
+		Acorde=bajo+"/"+Nota(1)+" Mayor 6";
+		System.out.println("Acorde de: "+bajo+"/"+Nota(1)+" Mayor 6");
+	}
+	
+	return Acorde;
+}
 public String esMenor() {
 	resetDistancias();
 	String Acorde = "";
@@ -343,7 +340,6 @@ public String esMenor() {
 	
 		if (TerceraMenor() && Quinta()) {
 			Acorde = bajo + " Menor";
-			System.out.println("Acorde de: "+bajo+" Menor");
 		}
 		//Primer Inversion
 		if (TerceraMayor() && SextaMayor()) {
@@ -367,11 +363,11 @@ public String esDisminuido() {
 		}
 		//////////////////////////////PRIMER INVERSION
 		if (TerceraMenor() && SextaMayor()) {
-			Acorde = bajo+ "/" +Nota(1)  + "Dim";
+			Acorde = bajo+ "/" +Nota(2)  + "Dim";
 		}
 		///////////////////////////////SEGUNDA INVERSION
 		if (QuintaDisminuida() &&SextaMayor()) {
-			Acorde =bajo + "/"+ Nota(2)	+ "Dim ";
+			Acorde =bajo + "/"+ Nota(1)	+ "Dim ";
 		}
 		
 System.out.println(Acorde);
@@ -389,7 +385,7 @@ public String esMayorSeptima() {
 
 	
 		if (TerceraMenor() && QuintaDisminuida() && SextaMenor()) {
-			Acorde = bajo +"/"+Nota(1)+ "Mayor" + "7";
+			Acorde = bajo +"/"+Nota(3)+ "Mayor" + "7";
 		}
 	
 	/////////////////////MAYOR SEPTIMA SEGUNDA INVERSION//
@@ -400,7 +396,7 @@ public String esMayorSeptima() {
 	/////////////////MAYOR SEPTIMA TERCER INVERSION/////
 	
 		if (SegundaMayor() && QuintaDisminuida()&& SextaMayor()) {
-			Acorde = bajo+"/"+Nota(3)+ "Mayor" + "7";
+			Acorde = bajo+"/"+Nota(1)+ "Mayor" + "7";
 			}
 		
 	return Acorde;
@@ -412,6 +408,24 @@ public String esMenorSeptima() {
 		if (TerceraMenor() && Quinta() && SeptimaMenor()) {
 			Acorde = bajo + "Menor" + "7";
 	}
+///////////////////////MAYOR SEPTIMA PRIMER INVERSION
+
+	if (TerceraMayor() && Quinta() && SextaMenor()) {
+		System.out.println("POR ACA"+Nota(4));
+		Acorde = bajo + "/" + Nota(4) + "Menor" + "7";
+	}
+
+/////////////////////MAYOR SEPTIMA SEGUNDA INVERSION//
+	if (TerceraMenor() && Cuarta() && SextaMenor()) {
+		Acorde = bajo + "/" + Nota(2) + "Menor" + "7";
+	}
+
+/////////////////MAYOR SEPTIMA TERCER INVERSION/////
+
+	if (SegundaMayor() && Cuarta() && SextaMayor()) {
+		Acorde = bajo + "/" + Nota(1) + "Menor" + "7";
+	}
+
 	return Acorde;
 }
 }

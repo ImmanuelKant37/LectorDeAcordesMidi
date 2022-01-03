@@ -1,5 +1,6 @@
 package proyectoMidi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -18,6 +19,9 @@ import javax.sound.midi.Transmitter;
 
 public class MIDI  {
 	static String listaDispositivos[] = new String[10] ;
+
+
+
 	public MIDI() {	
 		System.out.println("MIDI Abierto");
 	}
@@ -56,14 +60,16 @@ public class MIDI  {
 	
 		
 	}
-	public void abrirMidi(int numeroDispo) {
+
+	public void abrirMidi(int numeroDispo) throws IOException{
+		Receptor r=new Receptor();
 		MidiDevice.Info[] dispositivos = MidiSystem.getMidiDeviceInfo();
 		try {
 			MidiDevice dispMidi = MidiSystem.getMidiDevice(dispositivos[numeroDispo]);
 			dispMidi.open();
 		
 			Transmitter controlador = dispMidi.getTransmitter();
-			Receiver receptor = new Receptor();
+			Receiver receptor = r;
 
 			controlador.setReceiver(receptor);
 	System.out.println("Abrir Midi OK");
@@ -74,16 +80,17 @@ public class MIDI  {
 		}
 		
 	}
+
 	public void cerrarMidi(int numeroDispo) {
 
 		MidiDevice.Info[] dispositivos = MidiSystem.getMidiDeviceInfo();
 		try {
 			MidiDevice dispMidi = MidiSystem.getMidiDevice(dispositivos[numeroDispo]);
 			dispMidi.close();
-			System.out.println(dispMidi.getDeviceInfo()+"Cerrado");
+			System.out.println(dispMidi.getDeviceInfo() + "Cerrado");
 		} catch (MidiUnavailableException e) {
 			System.out.println(e);
-		
+
 		}
-}
 	}
+}

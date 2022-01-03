@@ -62,6 +62,16 @@ public class Form extends JFrame implements ActionListener, ItemListener, Change
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		System.out.println("Formulario Abierto");
 	}
+	public Form(Boolean visible) {
+		// Barra de Menu//////////////////////
+		setBounds(200, 200, 400, 400);
+		setVisible(visible);
+		setLayout(null);
+		setResizable(true);
+		setLocationRelativeTo(null);
+
+		System.out.println("Formulario oculto");
+	}
 
 	public void icono(String ruta) {
 
@@ -87,7 +97,7 @@ public class Form extends JFrame implements ActionListener, ItemListener, Change
 
 	}
 
-	public DefaultListModel modelLista = new DefaultListModel();
+	public DefaultListModel<String> modelLista = new DefaultListModel<String>();
 
 	public void lista(int x, int y, int anchoX, int altoY) {
 
@@ -140,7 +150,7 @@ public class Form extends JFrame implements ActionListener, ItemListener, Change
 			boton[i] = new JButton(palabra + numero);
 			boton[i].setBounds(x, (y + i * 50), ancho, alto);
 			add(boton[i]);
-			boton[i].addActionListener(new Eventos());
+
 		}
 
 	}

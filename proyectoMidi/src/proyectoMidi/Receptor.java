@@ -23,6 +23,7 @@ public class Receptor extends acordes implements Receiver {
 	private static final long serialVersionUID = 1L;
 
 	public Receptor() throws IOException {	
+	
 	}
 	
 	@Override

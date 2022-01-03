@@ -18,7 +18,7 @@ public class vistas{
 
 public String distanciasEncontradas[]= new String[13];
 	public vistas(){
-		
+	
 		Valores.add(valorDo);//0
 		Valores.add(valorReb);
 		Valores.add(valorRe);
@@ -34,29 +34,9 @@ public String distanciasEncontradas[]= new String[13];
 		Valores.add(valorDo);//12
 		asignaDistancias();
 	}
-	
-
 	////////////MODIFICADOR DE IMAGEN DEL INSTRUMENTO////////////////////
 	///////////////////////////////////////////////////////////////////
-	public void resizeImagen(String imagePathToRead, String imagePathToWrite, int resizeWidth, int resizeHeight)
-			throws IOException {
-		{
-
-			File fileToRead = new File(imagePathToRead);
-			BufferedImage bufferedImageInput = ImageIO.read(fileToRead);
-
-			BufferedImage bufferedImageOutput = new BufferedImage(resizeWidth, resizeHeight,
-					bufferedImageInput.getType());
-
-			Graphics2D g2d = bufferedImageOutput.createGraphics();
-			g2d.drawImage(bufferedImageInput, 0, 0, resizeWidth, resizeHeight, null);
-			g2d.dispose();
-
-			String formatName = imagePathToWrite.substring(imagePathToWrite.lastIndexOf(".") + 1);
-
-			ImageIO.write(bufferedImageOutput, formatName, new File(imagePathToWrite));
-		}
-	}
+	
 	//////////////////////////////////////////////////////////////////
 	
 	ArrayList <int[]> Valores = new ArrayList<int[]>();
@@ -89,7 +69,7 @@ public int resultadoDeDistancias=0;
 	
 	String nNotaBemol[] = new String[] 
     { "Do", "Reb", "Re", "Mib", "Mi", "Fa", "Solb", "Sol", "Lab", "La", "Sib", "Si" };//i<12 Cantidad
-	
+	int NotaOnOFF=3;
 
 	int nPulsadas[] = new int[12];
 	int numeroDeNota=0;
@@ -128,7 +108,6 @@ public int resultadoDeDistancias=0;
 		return distancia;
 		}
 
-	
 	public void verificarNotas(int octava) {
 		
 		for(int i=0;i<10;i++) {
@@ -157,7 +136,7 @@ public int resultadoDeDistancias=0;
 				}
 		}
 	}
-	int NotaOnOFF=3;
+
 
 	public void devuelveNotasON() {
 		for (NotaOnOFF= 3; NotaOnOFF < 100; NotaOnOFF++) {

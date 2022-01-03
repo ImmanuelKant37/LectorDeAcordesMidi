@@ -5,20 +5,28 @@ import java.awt.Font;
 import java.io.IOException;
 
 public class VistaPiano extends vistas {
-	public VistaPiano() {
+	public VistaPiano  (){
+		form.imagen("src/img/piano.jpg", 0, 0, 1000, 1000);
+		
+	}
+	{
+	
+		
+		form.menu("Archivo", 3);
 		try {
-			resizeImagen("src/img/Piano.jpg", "src/img/piano.jpg", 700, 300);
+			form.menuItem[0].addMouseListener(new Eventos(3));
 		} catch (IOException e) {
-			System.out.println("Error en carga de imagen" + e.toString());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		form.boton("Cerrar conexion Midi", 1, 0, 0, 200, 25);
+	
 		form.label("", 100, 730, 0, 200, 200);
 		
 		resetStringNombres();
 		posicionesNotasPiano();
 	
-		form.imagen("src/img/piano.jpg", -300, -300, 1000, 1000);
-		
+	
 		form.label[0].setFont(new Font("Serif", Font.PLAIN, 40));
 		form.label[1].setFont(new Font("Serif", Font.PLAIN, 40));
 		lblAcordeDim.setFont(new Font("Serif", Font.PLAIN, 40));
