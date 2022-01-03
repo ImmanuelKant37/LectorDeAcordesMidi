@@ -19,7 +19,7 @@ public class Form extends JFrame implements ActionListener, ItemListener, Change
 	 */
 	private static final long serialVersionUID = 1L;
 	public DefaultTableModel model;
-	public JLabel label[] = new JLabel[20];
+	public JLabel label[] = new JLabel[150];
 	public JTextField input[] = new JTextField[10];
 	public JTextArea textArea[] = new JTextArea[10];
 	public JList lista;
@@ -149,7 +149,7 @@ public class Form extends JFrame implements ActionListener, ItemListener, Change
 
 		for (int i = 0; i < cantidad; i++) {
 			label[i] = new JLabel(palabra);
-			label[i].setBounds(x, y + i * 40, ancho, alto);
+			label[i].setBounds(x, y , ancho, alto);
 			add(label[i]);
 
 		}

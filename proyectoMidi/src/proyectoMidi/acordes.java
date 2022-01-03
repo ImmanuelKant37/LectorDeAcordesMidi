@@ -1,40 +1,104 @@
 package proyectoMidi;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class acordes extends VistaPiano{
-private int st=0;
-private String bajo=nombreTeclasPresionadas[valorTeclaPresionada[st]];
-private String tonicaEn(int semitono,int nota) {
 	
-	String tonica=nombreTeclasPresionadas[valorTeclaPresionada[semitono+nota]] ;
-	 return tonica;
+	public Boolean Unisono=false, SegundaMenor=false, SegundaMayor=false,
+			TerceraMenor=false, TerceraMayor=false, Cuarta=false, QuintaDisminuida=false, 
+			Quinta=false, SextaMenor=false, SextaMayor=false, SeptimaMenor=false, SeptimaMayor=false;
+
+	public String bajo;
+
+	public acordes() {
 }
-public acordes() {}
+	public String Nota="";
+	public String Nota(int nota) {
+		try {
+		Nota=nombreTeclasPresionadas[notasEncontradas.get(nota)];
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return Nota;
+	}
+
+
 public void notaOfNotaOn() {
 	String acorde = "";
 
 
 	if (condicionalPulsada == 144) {
+	
+		nPulsadas[cantidadNotasPulsadas]=numeroDeNota;
+		notasEncontradas.add(numeroDeNota);////NOTAS ENCONTRADAS VALORES
+		Collections.sort(notasEncontradas);
+	
 		cantidadNotasPulsadas++;
-		nPulsadas[cantidadNotasPulsadas] = numeroDeNota;
-		nSoltada = numeroDeNota;
-		form.label[1].setText("");
-		form.label[0].setText("");
 		for (int ite = 0; ite < 12; ite++) {
 			verificarNotas(ite);
-			devuelveNotasON(ite);
+			devuelveNotasON();
 		}
+		System.out.println("Valores de la lista: ");
+		for(int i=0; i<cantidadNotasPulsadas; i++) {
+			System.out.print(notasEncontradas.get(i)+" ");
+
+		System.out.print("nombre: "+ nombreTeclasPresionadas[notasEncontradas.get(i)]+" ");
+		System.out.println("i: "+i);
+		}
+		if(cantidadNotasPulsadas ==2) {
+			int numero=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(1));
+			distanciasEncontradas[0]=Distancias[numero];
+			System.out.println("Dos Notas: "+notasEncontradas.get(0)+" ");
+			System.out.println(notasEncontradas.get(1));
+			System.out.println(Distancias[numero]);
+			System.out.println("Resta de primer distancia: "+numero);
+			bajo=nombreTeclasPresionadas[notasEncontradas.get(0)];
+		}
+		System.out.println();
+		form.label[1].setText("");
+		form.label[0].setText("");
 		
-		if (cantidadNotasPulsadas == 3) {
+		
+		if (cantidadNotasPulsadas >= 3) {
+			Collections.sort(notasEncontradas);
+			int numero2=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(1));
+			int numero=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(2));
+		
+			distanciasEncontradas[0]=Distancias[numero];
+			distanciasEncontradas[1]=Distancias[numero2];
+			bajo=nombreTeclasPresionadas[notasEncontradas.get(0)];
+			System.out.println("Dos Notas: "+notasEncontradas.get(1)+" ");
+			System.out.println(notasEncontradas.get(2)+" ");
+			System.out.println(distanciasEncontradas[0]+" "+distanciasEncontradas[1]+" ");
+
 			form.label[0].setText("");
+			form.label[0].setText(esMayor());
+		
 		form.label[1].setText("");
 	
 		lblAcordeDim.setText("");
-		form.label[0].setText(esMayor());
+		
 		lblAcordeDim.setText(esDisminuido());
 		form.label[1].setText(esMenor()); 
 		}
 		
 		if (cantidadNotasPulsadas == 4) {
+			Collections.sort(notasEncontradas);
+			int numero1=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(1));
+			int numero2=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(2));
+		
+			int numero3=Math.abs(notasEncontradas.get(0)-notasEncontradas.get(3));
+
+			distanciasEncontradas[0]=Distancias[numero1];
+			distanciasEncontradas[1]=Distancias[numero2];
+		distanciasEncontradas[2]=Distancias[numero3];
+		bajo=nombreTeclasPresionadas[notasEncontradas.get(0)];
+		System.out.println("Dos Notas: "+notasEncontradas.get(1)+" ");
+		System.out.println(notasEncontradas.get(2)+" ");
+		System.out.println(distanciasEncontradas[0]+" "+distanciasEncontradas[1]+" "+distanciasEncontradas[2]+" ");
+
 			form.label[0].setText("");
 			form.label[1].setText("");
 			
@@ -53,36 +117,35 @@ public void notaOfNotaOn() {
 	
 		}
 		if (cantidadNotasPulsadas < 3) {
+			form.label[0].setText(esMayor());
 			form.label[1].setText("");
 			form.label[0].setText("");
 		}
-		System.out.println("Formaste:" + acorde);
+		System.out.println("FORMASTE:" + Acorde);
 		System.out.println(" Teclas presionadas: " + cantidadNotasPulsadas);
 
 	}
 
 	if (condicionalPulsada == 128) {
-		
+		Collections.sort(notasEncontradas);
 		cantidadNotasPulsadas--;
+		distanciasEncontradas[cantidadNotasPulsadas]="";
+		nSoltada = numeroDeNota;
+		notasEncontradas.remove(cantidadNotasPulsadas);
+	
+	
+		for(int ite=0; ite<12;ite++) {
+		verificarNotaSuelta(ite);
+		devuelveNotaOFF();
+		}
 		form.label[1].setText("");
 		form.label[0].setText("");
-		for(int ite=0; ite<10;ite++) {
-		verificarNotaSuelta(ite);
-		devuelveNotaOFF(ite);
-		}
-		
 		lblAcordeDim.setText(esDisminuido());
 		form.label[0].setText(esMayor());
 		form.label[1].setText(esMenor());
 	
 	
-		if (cantidadNotasPulsadas == 3) {
-		
-			
-		form.label[0].setText(esMayor());
-		form.label[1].setText(esMenor());
 	
-		}
 		if (cantidadNotasPulsadas < 3) {
 			form.label[1].setText("");
 			form.label[0].setText("");
@@ -90,8 +153,7 @@ public void notaOfNotaOn() {
 		}
 
 		if (cantidadNotasPulsadas >= 4) {
-			form.label[0].setText("");
-			form.label[1].setText("");
+	
 			form.label[1].setText(esMayorSeptima());
 		
 			form.label[0].setText(esMenorSeptima());
@@ -102,208 +164,253 @@ public void notaOfNotaOn() {
 
 }
 
+public void resetDistancias() {
+	Unisono=false; 
+			SegundaMenor=false;
+			SegundaMayor=false;
+			TerceraMenor=false;
+			TerceraMayor=false;
+			Cuarta=false;
+			QuintaDisminuida=false;
+			Quinta=false;
+			SextaMenor=false;
+			SextaMayor=false;
+			SeptimaMenor=false; 
+			SeptimaMayor=false;
 
-public Boolean segundaMayor() {
 	
-			boolean es=false;
-			for(int i=0;i<9;i++ ) {
-			if(Distancia(st + 0, valorRe[i]) == "Segunda Mayor"){
-				es=true;
-			}
-		}
-		return es;
-		} 
-public Boolean terceraMenor() {
+}
+public Boolean Unisono() {
+	Unisono=false;
+		
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[0]){ 
+			Unisono=true;
+		}}
+
 	
-			boolean es=false;
-			for(int i=0;i<9;i++ ) {
-			if(Distancia(st + 0, valorMib[i]) == "Tercera Menor"){
-				es=true;
+return Unisono;
+}
+
+public Boolean SegundaMenor() {
+	
+	SegundaMenor=false;
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+	if(Distancia(i) == Distancias[1]){ 
+		SegundaMenor=true;
+	}}
+
+		
+	
+return SegundaMenor;
+}
+
+public Boolean SegundaMayor() {
+	
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[2]){ 
+			SegundaMayor=true;
 			}
+			
 		}
-		return es;
-		} 
-public Boolean terceraMayor() {
-	boolean es=false;
-	for(int i=0;i<9;i++ ) {
-	if(Distancia(st + 0, valorMi[i]) == "Tercera Mayor"){
-		es=true;
+
+return SegundaMayor;
+}
+
+public Boolean TerceraMenor() {
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[3]){ 
+			TerceraMenor=true;
+		}
+	
 	}
+return TerceraMenor;
 }
-return es;
-} 
-public Boolean cuarta() {
-	boolean es=false;
-	for(int i=0;i<9;i++ ) {
-	if(Distancia(st + 0, valorFa[i]) == "Cuarta"){
-		es=true;
+
+public Boolean TerceraMayor() {
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[4]){ 
+			TerceraMayor=true;
+		}
 	}
+
+return TerceraMayor;
 }
-return es;
-}
-public Boolean quintaDisminuida() {
-	boolean es=false;
-	for(int i=0;i<9;i++ ) {
-	if(Distancia(st + 0, valorSolb[i]) == "Quinta Disminuida"){
-		es=true;
+
+public Boolean Cuarta() {
+	
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[5]){ 
+			Cuarta=true;
+		}
+		
 	}
+
+
+return Cuarta;
 }
-return es;
-} 
-public Boolean quinta() {
-	boolean es=false;
-	for(int i=0;i<9;i++ ) {
-	if(Distancia(st + 0, valorSol[i]) == "Quinta"){
-		es=true;
+
+public Boolean QuintaDisminuida() {
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[6]){ 
+			QuintaDisminuida=true;
+		}
+	
 	}
+return QuintaDisminuida;
 }
-return es;
-} 
-public Boolean sextaMenor() {
-	boolean es=false;
-	for(int i=0;i<9;i++ ) {
-	if(Distancia(st + 0, valorLab[i]) == "Sexta Menor"){
-		es=true;
+
+public Boolean Quinta() {
+	
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[7]){ 
+			Quinta=true;
+		}
+		
 	}
+
+return Quinta;
 }
-return es;
-}
-public Boolean sextaMayor() {
-	boolean es=false;
-	for(int i=0;i<9;i++ ) {
-	if(Distancia(st + 0, valorLa[i]) == "Sexta Mayor"){
-		es=true;
+
+
+public Boolean SextaMenor() {
+	
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[8]){ 
+			SextaMenor=true;
+		}
+		
 	}
+return SextaMenor;
 }
-return es;
-}
-public Boolean septimaMenor() {
-	boolean es=false;
-	for(int i=0;i<9;i++ ) {
-	if(Distancia(st + 0, valorSib[i]) == "Septima Menor"){
-		es=true;
+
+public Boolean SextaMayor() {
+	
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[9]){ 
+			SextaMayor=true;
+		}
+		
 	}
+
+return SextaMayor;
 }
-return es;
+
+public Boolean SeptimaMenor() {
+	
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[10]){ 
+			SeptimaMenor=true;
+		}
+	}
+
+return SeptimaMenor;
 }
+
+public Boolean SeptimaMayor() {
+	for(int i= 0; i<distanciasEncontradas.length;i++) {
+		if(Distancia(i) == Distancias[11]){ 
+			SeptimaMayor=true;
+		}
+	}
+return SeptimaMayor;
+}
+	
+	
 
 public String esMayor() {
-
+resetDistancias();
 	String Acorde = "";
-
-	for (st = 0; st < 120; st++) {
-		if (terceraMayor() && quinta()) {
-			Acorde = nombreTeclasPresionadas[valorTeclaPresionada[st]];
-			System.out.println(Acorde);
-		}
-		if (terceraMenor() && sextaMenor() ) {
-							Acorde = bajo + "/"
-								   + tonicaEn(st,8)+ " Mayor";
-							System.out.println(Acorde);
-		}
-		if (cuarta() && sextaMayor()) {
-							Acorde = bajo + "/" 
-								   +tonicaEn(st,5) + " Mayor";
-		}
+	if(TerceraMayor()&&Quinta()||TerceraMayor()&&Quinta()&&Unisono()) {	
+		Acorde=bajo+" Mayor";
+		System.out.println("Acorde de: "+bajo+" Mayor");
 	}
-
+	if(TerceraMenor()&&SextaMenor()) {	
+		Acorde=bajo+"/"+Nota(2)+" Mayor";
+		System.out.println("Acorde de: "+bajo+"/"+Nota(2)+" Mayor");
+	}
+	if(Cuarta()&&SextaMayor()) {	
+		Acorde=bajo+"/"+Nota(1)+" Mayor";
+		System.out.println("Acorde de: "+bajo+"/"+Nota(1)+" Mayor");
+	}
 	return Acorde;
 }
+			
 public String esMenor() {
-
+	resetDistancias();
 	String Acorde = "";
-
-	for (st = 0; st < 120; st++) {
-		if (terceraMenor()
-		 && quinta()) {
-			Acorde = bajo + " Menor";
-		}
-		if (cuarta()
-		 && sextaMenor()) {
-			Acorde = bajo + "/" + tonicaEn(st,5) + " Menor";
-		}
-
-		if (terceraMayor() && sextaMayor()) {
-			Acorde = bajo + "/" +tonicaEn(st,9) + " Menor";
-		}
-	}
-
-	return Acorde;
-
-}
-public String esDisminuido() {
-
-	String Acorde = "";
-		////////////////////////////////SIN INVERSION
-	for (st = 0; st < 120; st++) {
-		if (terceraMenor()
-		 && quintaDisminuida()) {
-			Acorde = bajo
-			+ 	" Dim ";
-		}
-		//////////////////////////////PRIMER INVERSION
-		if (terceraMenor() && sextaMayor()) {
-			Acorde = bajo+ "/" +tonicaEn(st,9)  + "Dim";
-		}
-		///////////////////////////////SEGUNDA INVERSION
-		if (quintaDisminuida() 
-		 &&sextaMayor()) {
-			Acorde =bajo + "/"+ tonicaEn(st,6)	+ "Dim ";
-		}
 
 	
+		if (TerceraMenor() && Quinta()) {
+			Acorde = bajo + " Menor";
+			System.out.println("Acorde de: "+bajo+" Menor");
+		}
+		//Primer Inversion
+		if (TerceraMayor() && SextaMayor()) {
+			Acorde = bajo + "/" +Nota(2) + " Menor";
+		}
+		//Segunda Inversion
+		if (Cuarta() && SextaMenor()) {
+			Acorde = bajo + "/" + Nota(1) + " Menor";
+		}
 
-	}
+	return Acorde;
+}
+public String esDisminuido() { 
+	resetDistancias();
+	Acorde = "";
+	
+		////////////////////////////////SIN INVERSION
+		if (TerceraMenor() && QuintaDisminuida()) {
+			Acorde = bajo+ " Dim ";
+			System.out.println("Estoy en disminuida");
+		}
+		//////////////////////////////PRIMER INVERSION
+		if (TerceraMenor() && SextaMayor()) {
+			Acorde = bajo+ "/" +Nota(1)  + "Dim";
+		}
+		///////////////////////////////SEGUNDA INVERSION
+		if (QuintaDisminuida() &&SextaMayor()) {
+			Acorde =bajo + "/"+ Nota(2)	+ "Dim ";
+		}
+		
 System.out.println(Acorde);
 	return Acorde;
 
 }
 public String esMayorSeptima() {
-
+	resetDistancias();
 	String Acorde = "";
 	//MAYOR SEPTIMA SIN INVERTIR
-	for (st = 0; st < 120; st++) {
-		if (terceraMayor()
-				&& quinta()
-					&& septimaMenor()) {
+		if (TerceraMayor() && Quinta() && SeptimaMenor()) {
 			Acorde = bajo + "Mayor" + "7";
-		}
 	}
 	///////////////////////MAYOR SEPTIMA PRIMER INVERSION
 
-	for ( st = 0; st < 120; st++) {
-		if (terceraMenor()
-				&& quintaDisminuida()
-					&& sextaMenor()) {
-			Acorde = bajo +"/"+tonicaEn(st,8)+ "Mayor" + "7";
+	
+		if (TerceraMenor() && QuintaDisminuida() && SextaMenor()) {
+			Acorde = bajo +"/"+Nota(1)+ "Mayor" + "7";
 		}
-	}
+	
 	/////////////////////MAYOR SEPTIMA SEGUNDA INVERSION//
-	for (st = 0; st < 120; st++) {
-		if (terceraMenor()
-				&& cuarta()
-					&& sextaMayor()) {
-			Acorde = bajo+"/"+tonicaEn(st,5)+ "Mayor" + "7";
+		if (TerceraMenor() && Cuarta() && SextaMayor()) {
+			Acorde = bajo+"/"+Nota(2)+ "Mayor" + "7";
 			}
-	}
+	
 	/////////////////MAYOR SEPTIMA TERCER INVERSION/////
-	for (st = 0; st < 120; st++) {
-		if (segundaMayor() 
-				&& quintaDisminuida()
-					&& sextaMayor()) {
-			Acorde = bajo+"/"+tonicaEn(st,2)+ "Mayor" + "7";
+	
+		if (SegundaMayor() && QuintaDisminuida()&& SextaMayor()) {
+			Acorde = bajo+"/"+Nota(3)+ "Mayor" + "7";
 			}
-	}
+		
 	return Acorde;
 }
 public String esMenorSeptima() {
+	resetDistancias();
 	String Acorde = "";
-	for (st = 0; st < 120; st++) {
-		if (terceraMenor()
-				&& quinta()
-				&& septimaMenor()) {
+	
+		if (TerceraMenor() && Quinta() && SeptimaMenor()) {
 			Acorde = bajo + "Menor" + "7";
-		}
 	}
 	return Acorde;
 }

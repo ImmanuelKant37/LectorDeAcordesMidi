@@ -13,20 +13,26 @@ import javax.swing.JLabel;
 public class vistas{
 	Form form = new Form();
 	JLabel lblAcordeDim = new JLabel();
+	JLabel nombreNota = new JLabel();
+	ArrayList<Integer> notasEncontradas= new ArrayList<Integer>();
+
+public String distanciasEncontradas[]= new String[13];
 	public vistas(){
-		Valores.add(valorDo);
+		
+		Valores.add(valorDo);//0
 		Valores.add(valorReb);
 		Valores.add(valorRe);
 		Valores.add(valorMib);
-		Valores.add(valorMi);
+		Valores.add(valorMi);//4
 		Valores.add(valorFa);
 		Valores.add(valorSolb);
-		Valores.add(valorSol);
+		Valores.add(valorSol);//7
 		Valores.add(valorLab);
 		Valores.add(valorLa);
-		Valores.add(valorSib);
+		Valores.add(valorSib);//10
 		Valores.add(valorSi);
-		
+		Valores.add(valorDo);//12
+		asignaDistancias();
 	}
 	
 
@@ -71,78 +77,56 @@ public class vistas{
 	int valorSib[] = new int[] { 10, 22, 34, 46, 58, 70, 82, 94, 106, 128 };
 	int valorSi[] = new int[] { 11, 23, 35, 47, 59, 71, 83, 95, 107, 129 };
 	
+	/////////////////////////SON 12 x 10 EN TOTAL!!!///////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////
-
+public int resultadoDeDistancias=0;
 	String Acorde = "";
 	String acordeFormado = "Acorde";
 	
-
-	String nombreTeclasPresionadas[] = new String[150];
+	String nNotaSostenido[] = new String[] 
+	{ "Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si" }; //i<12 Cantidad
 	
-	String nNotaSostenido[] = new String[] { "Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si" };
-	String nNotaBemol[] = new String[] { "Do", "Reb", "Re", "Mib", "Mi", "Fa", "Solb", "Sol", "Lab", "La", "Sib", "Si" };
+	
+	String nNotaBemol[] = new String[] 
+    { "Do", "Reb", "Re", "Mib", "Mi", "Fa", "Solb", "Sol", "Lab", "La", "Sib", "Si" };//i<12 Cantidad
 	
 
 	int nPulsadas[] = new int[12];
-	int numeroDeNota;
+	int numeroDeNota=0;
 	int condicionalPulsada = 0;
 
 	int cantidadNotasPulsadas = 0;
 	int nSoltada = 0;
 	
 	int valorTeclaPresionada[] = new int[150];
-	int numeroDeOctava[] = 		 new int[150];
-
-
-	public String Distancia(int nota1, int nota2) {
-		String distancia = "";
+	int numeroDeOctava[] = new int[150];
+	
+	String nombreTeclasPresionadas[] = new String[150];
+	String [] Distancias=new String[100];
+	public void asignaDistancias() {
 		
-		for(int i=0; i<10; i++) {
-			if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorDo[i]) {
-				distancia = "Octava";
-			}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorReb[i]) {
-			distancia = "Segunda Menor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorRe[i]) {
-			distancia = "Segunda Mayor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorMib[i]) {
-			distancia = "Tercera Menor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorMi[i]) {
-			distancia = "Tercera Mayor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorFa[i]) {
-			distancia = "Cuarta";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorSolb[i]) {
-			distancia = "Quinta Disminuida";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorSol[i]) {
-			distancia = "Quinta";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorLab[i]) {
-			distancia = "Sexta Menor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorLa[i]) {
-			distancia = "Sexta Mayor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorSib[i]) {
-			distancia = "Septima Menor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorSi[i]) {
-			distancia = "Septima Mayor";
-		}
-		if (valorTeclaPresionada[nota2] - valorTeclaPresionada[nota1] == valorDo[i]) {
-			distancia = "Octava";
-		}
-		}
-
-		return distancia;
-
+			for(int i=0; i<8;i++) {
+				int j=12*i;
+		Distancias[0+j]="Tonica";
+		Distancias[1+j]="Segunda Menor";
+		Distancias[2+j]="Segunda Mayor";
+		Distancias[3+j]="Tercera Menor";
+		Distancias[4+j]="Tercera Mayor";
+		Distancias[5+j]="Cuarta";
+		Distancias[6+j]="Quinta Disminuida";
+		Distancias[7+j]="Quinta";
+		Distancias[8+j]="Sexta Menor";
+		Distancias[9+j]="Sexta Mayor";
+		Distancias[10+j]="Septima Menor";
+		Distancias[11+j]="Septima Mayor";
 	}
+	}
+
+	public String Distancia(int nota) {
+		String distancia = "";	
+		distancia=distanciasEncontradas[nota];	
+		return distancia;
+		}
 
 	
 	public void verificarNotas(int octava) {
@@ -154,10 +138,10 @@ public class vistas{
 				valorTeclaPresionada[numeroDeNota] = Valores.get(octava)[i];
 				numeroDeOctava[numeroDeNota] =i;
 				
-				System.out.println("VALOR GET OCTAVA: "+Valores.get(octava)[i]);
-				System.out.println("NOMBRE TECLA PRESIONADA: "+ nombreTeclasPresionadas[numeroDeNota]+" ");
-				System.out.println("VALOR TECLA PRESIONADA: " +valorTeclaPresionada[numeroDeNota]+" ");
-				System.out.println("NUMERO DE OCTAVA: " +numeroDeOctava[numeroDeNota]);
+				System.out.print("NOMBRE TECLA PRESIONADA: "+ nombreTeclasPresionadas[numeroDeNota]
+															+" "+numeroDeOctava[numeroDeNota]+" ");
+				System.out.print("VALOR TECLA PRESIONADA: " +valorTeclaPresionada[numeroDeNota]+" ");
+
 			}
 		}
 	}
@@ -169,45 +153,26 @@ public class vistas{
 
 				nombreTeclasPresionadas[numeroDeNota] = "";
 				valorTeclaPresionada[numeroDeNota] = 0;
-				numeroDeOctava[numeroDeNota] =0;
-				
-				System.out.println("VALOR GET OCTAVA: "+Valores.get(octava)[i]);
-				System.out.println("NOMBRE TECLA PRESIONADA: "+ nombreTeclasPresionadas[numeroDeNota]+" ");
-				System.out.println("VALOR TECLA PRESIONADA: " +valorTeclaPresionada[numeroDeNota]+" ");
-				System.out.println("NUMERO DE OCTAVA: " +numeroDeOctava[numeroDeNota]);
-			}
+				numeroDeOctava[numeroDeNota] = 0;
+				}
 		}
-
-		}
-	
-	public void devuelveNotasON(int octava) {
-		int oct= 12*octava;
-		
-		
-		for (int j = 0; j < 12; j++) {
-			if (nombreTeclasPresionadas[oct+j] != "") {
-			
-				form.label[j + 2].setText(nombreTeclasPresionadas[oct+j] + " " +octava + " ");
-			
-			}
-			
-		}
-	
-		 ;
 	}
+	int NotaOnOFF=3;
 
-	public void devuelveNotaOFF(int octava) {
-		int oct= 12*octava;
+	public void devuelveNotasON() {
+		for (NotaOnOFF= 3; NotaOnOFF < 100; NotaOnOFF++) {
+			if (nombreTeclasPresionadas[NotaOnOFF] != "") {
+				form.label[NotaOnOFF].setText(nombreTeclasPresionadas[NotaOnOFF]);
+	}
+}
+}
 
-		for (int j = 0; j < 12; j++) {
-			if (nombreTeclasPresionadas[oct+j] == "") {
-			
-				form.label[j + 2].setText(nombreTeclasPresionadas[oct+j] + " " );
-				
-			}
-
-		}
+	public void devuelveNotaOFF() {
 	
-
+		for ( NotaOnOFF= 3; NotaOnOFF < 100; NotaOnOFF++) {
+			if (valorTeclaPresionada[NotaOnOFF] == 0) {
+				form.label[NotaOnOFF].setText("");
+			}
+		}
 	}
 }
