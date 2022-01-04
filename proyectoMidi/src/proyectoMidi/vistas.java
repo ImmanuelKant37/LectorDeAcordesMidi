@@ -18,7 +18,8 @@ public class vistas{
 
 public String distanciasEncontradas[]= new String[13];
 	public vistas(){
-		form.imagen("src/img/Piano.jpg", 0, 0, 1000, 1000);
+		
+
 		Valores.add(valorDo);//0
 		Valores.add(valorReb);
 		Valores.add(valorRe);
@@ -152,6 +153,25 @@ public int resultadoDeDistancias=0;
 			if (valorTeclaPresionada[NotaOnOFF] == 0) {
 				form.label[NotaOnOFF].setText("");
 			}
+		}
+	}
+	public void resizeImagen(String imagePathToRead, String imagePathToWrite, int resizeWidth, int resizeHeight)
+			throws IOException {
+		{
+
+			File fileToRead = new File(imagePathToRead);
+			BufferedImage bufferedImageInput = ImageIO.read(fileToRead);
+
+			BufferedImage bufferedImageOutput = new BufferedImage(resizeWidth, resizeHeight,
+					bufferedImageInput.getType());
+
+			Graphics2D g2d = bufferedImageOutput.createGraphics();
+			g2d.drawImage(bufferedImageInput, 0, 0, resizeWidth, resizeHeight, null);
+			g2d.dispose();
+
+			String formatName = imagePathToWrite.substring(imagePathToWrite.lastIndexOf(".") + 1);
+
+			ImageIO.write(bufferedImageOutput, formatName, new File(imagePathToWrite));
 		}
 	}
 }

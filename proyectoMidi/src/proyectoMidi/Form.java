@@ -229,10 +229,14 @@ public class Form extends JFrame implements ActionListener, ItemListener, Change
 	}
 
 	public void imagen(String ruta, int x, int y, int anchoX, int altoY) {
-		lbImagen = new JLabel(new ImageIcon(ruta));
+		ImageIcon I= new ImageIcon(ruta);
+		lbImagen = new JLabel(I);
 
+		
 		lbImagen.setBounds(x, y, anchoX, altoY);
+		
 		add(lbImagen);
+	
 	}
 
 
