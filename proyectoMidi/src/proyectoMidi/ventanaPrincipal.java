@@ -18,7 +18,7 @@ try {
 	public static void main(String[] args) throws IOException {
 	
 		ventanaPrincipal v = new ventanaPrincipal();
-		
+		vistaJuego juego= new vistaJuego(true);
 		//////////////VARIACION 1
 
 	}

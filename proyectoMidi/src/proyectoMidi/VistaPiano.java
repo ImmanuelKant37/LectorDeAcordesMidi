@@ -114,9 +114,9 @@ lector.close();
 		try {
 			int[] posx= new int[100];
 			int[] posy= new int[100];
-		int index= directorios.getSelectedIndex();
-		BufferedReader lector = new BufferedReader(new FileReader(archivos[index]));
-		
+			int index= directorios.getSelectedIndex();
+			BufferedReader lector = new BufferedReader(new FileReader(archivos[index]));
+			
 		if (index==1) {
 			for (int i = 0; i <100; i++) {
 				posx[i]=Integer.parseInt(lector.readLine());
@@ -154,8 +154,6 @@ lector.close();
 		// POSICIONES NOTA X
 	
 	}
-
-	
 
 	{
 
